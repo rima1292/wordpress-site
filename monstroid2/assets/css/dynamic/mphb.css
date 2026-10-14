@@ -1,0 +1,534 @@
+[class*='mphb'] {
+    font-weight: $mphb_bt_font-weight;
+font-size: $mphb_bt_font_size{px};
+font-style: $mphb_bt_font_style;
+line-height: $mphb_bt_line_height;
+font-family: $mphb_bt_font_family;
+letter-spacing: $mphb_bt_letter_spacing{px};
+text-transform: $mphb_bt_text_transform;
+text-align: inherit;
+color: $mphb_txt_secondary_color;
+}
+
+[class*='mphb'] a {
+    color: $mphb_link_color;
+}
+
+[class*='mphb'] a:hover {
+    color: $mphb_link_hover_color;
+}
+
+.mphb-room-type-title,
+.mphb-recommendation-title,
+.mphb-room-rate-chooser-title,
+.mphb-services-details-title,
+.mphb-price-breakdown-title,
+.mphb-room-number,
+.mphb-customer-details-title,
+.mphb-service-title {
+    font-weight: $mphb_title_font_weight;
+font-size: $mphb_title_font_size{px};
+font-style: $mphb_title_font_style;
+line-height: $mphb_title_line_height;
+font-family: $mphb_title_font_family;
+letter-spacing: $mphb_title_letter_spacing{px};
+text-transform: $mphb_title_text_transform;
+text-align: inherit;
+color: $mphb_txt_primary_color;
+}
+
+
+/*
+****
+******
+                         Button.css
+****
+******
+*/
+
+.mphb-book-button,
+.mphb-recommendation-reserve-button,
+.mphb-confirm-reservation {
+    color: $mphb_txt_invert_color;
+    background: $mphb_button_bg;
+}
+
+.mphb-book-button:hover,
+.mphb_sc_checkout-submit-wrapper .button:hover,
+.mphb-recommendation-reserve-button:hover,
+.mphb-confirm-reservation:hover {
+    color: $mphb_txt_invert_color;
+    background: $mphb_button_bg_invert;
+}
+
+
+.datepick {
+    background-color: $mphb_bg_primary_color;
+    color: $mphb_txt_primary_color;
+}
+
+.datepick-nav {
+    background: $mphb_bg_accent_color2;
+}
+
+.datepick .datepick-nav .datepick-cmd-today {
+    font-weight: $mphb_title_font_weight;
+    font-family: $mphb_title_font_family;
+    color: $mphb_txt_invert_color;
+    text-transform: $mphb_title_text_transform;
+}
+
+.datepick .datepick-nav .datepick-cmd-today:hover {
+    color: $mphb_txt_accent_color;
+}
+
+.datepick-cmd:hover {
+    background: $mphb_bg_accent_color2;
+}
+
+.datepick-cmd-prev:before,
+.datepick-cmd-next:before {
+    color: $mphb_txt_invert_color;
+}
+
+.datepick-cmd-prev:hover:before,
+.datepick-cmd-next:hover:before {
+    color: $mphb_link_hover_color;
+}
+
+.datepick-month-header {
+    background: $mphb_bg_secondary_color;
+    font-family: $mphb_bt_font_family;
+    font-weight: $mphb_bt_font-weight;
+letter-spacing: $mphb_bt_letter_spacing{px};
+color: $mphb_txt_secondary_color;
+}
+
+.datepick-month-header select {
+    font-family: $mphb_bt_font_family;
+    font-weight: $mphb_bt_font-weight;
+    color: $mphb_txt_secondary_color;
+}
+
+.mphb-calendar .datepick .datepick-month:first-child,
+.datepick-popup .datepick .datepick-month:first-child {
+    border-right: 2px solid $mphb_bg_secondary_color;
+}
+
+.datepick-month th,
+.datepick-month td,
+.datepick-month a {
+    background-color: $mphb_bg_primary_color;
+    color: $mphb_txt_secondary_color;
+}
+
+.datepick-month td .datepick-weekend,
+.mphb-calendar .datepick-month td .mphb-past-date,
+.mphb-datepick-popup .datepick-month td .mphb-past-date,
+.mphb-datepick-popup .datepick-month td .datepick-weekend {
+    background-color: $mphb_bg_primary_color;
+    color: $mphb_txt_secondary_color;
+}
+
+.mphb-calendar .datepick .datepick-month table tbody > tr > td {
+    border-right: 1px solid $mphb_bg_primary_color;
+    border-top: 1px solid $mphb_bg_primary_color;
+}
+
+.mphb-calendar .datepick .datepick-month table td span.mphb-booked-date,
+.datepick-popup .datepick .datepick-month table td span.mphb-booked-date,
+.mphb-calendar .datepick-month td .mphb-booked-date.mphb-date-check-in.mphb-date-check-out {
+    background-color: $mphb_bg_accent_color;
+    color: $mphb_txt_invert_color;
+}
+
+.datepick-popup .datepick-month th,
+.datepick-month th a,
+.mphb-calendar .datepick-month th,
+.mphb-calendar .datepick-month td .mphb-available-date {
+    background: $mphb_bg_primary_color;
+    color: $mphb_txt_secondary_color;
+}
+
+.datepick .datepick-month table td span.datepick-today,
+.datepick-popup .datepick .datepick-month .datepick-today{
+    background-color: $mphb_bg_accent_color2;
+    color: $mphb_txt_invert_color;
+}
+
+.mphb-datepick-popup .datepick-month td a.datepick-highlight,
+.mphb-datepick-popup .datepick-month td a.datepick-selected,
+.mphb-datepick-popup .datepick-month td a:hover {
+    background-color: $mphb_bg_accent_color2;
+    color: $mphb_txt_invert_color;
+}
+
+.datepick-ctrl,
+body.single-mphb_room_type .comment-meta,
+body.single-mphb_room_type .comment-meta .fn{
+    font-style: $mphb_bt_font_style;
+    font-weight: $mphb_bt_font-weight;
+font-size: $mphb_bt_font_size{px};
+line-height: $mphb_bt_line_height;
+font-family: $mphb_bt_font_family;
+letter-spacing: $mphb_bt_letter_spacing{px};
+background: $mphb_bg_primary_color;
+}
+
+body.single-mphb_room_type .comment-meta .fn {
+    color: $mphb_txt_primary_color;
+    font-weight: bold;
+}
+
+.datepick-ctrl > a {
+    color: $mphb_link_color;
+}
+
+.datepick-ctrl > a.datepick-cmd:hover {
+    color: $mphb_link_hover_color;
+}
+
+.mphb-calendar .datepick-month td .mphb-booked-date.mphb-date-check-in {
+    background: linear-gradient(to bottom right,$mphb_bg_accent_color2 0,$mphb_bg_accent_color2 50%,$mphb_bg_accent_color 50%,$mphb_bg_accent_color 100%);
+}
+
+.mphb-calendar .datepick-month td .mphb-available-date.mphb-date-check-out {
+    background: linear-gradient(to bottom right,$mphb_bg_accent_color 0,$mphb_bg_accent_color 50%,$mphb_bg_accent_color2 50%,$mphb_bg_accent_color2 100%);
+    color: $mphb_txt_invert_color;
+}
+
+
+.mphb-booking-form {
+    background-color: $mphb_bg_accent_color;
+}
+.mphb-booking-form p > label {
+    font-family: $mphb_st_font_family;
+font-size: $mphb_st_font_size{px};
+font-weight: $mphb_st_font_weight;
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+text-transform: $mphb_st_text_transform;
+color: $mphb_txt_invert_color;
+}
+
+body.single-mphb_room_type .comment-reply-link {
+    font-family: $mphb_st_font_family;
+font-size: $mphb_st_font_size{px};
+font-weight: $mphb_st_font_weight;
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+text-transform: $mphb_st_text_transform;
+color: $mphb_txt_primary_color;
+}
+
+.mphb-booking-form p > input,
+.mphb-booking-form p > select {
+    background-color: $mphb_bg_primary_color;
+    color: $mphb_txt_primary_color;
+    font-family: $mphb_bt_font_family;
+}
+
+.mphb-reserve-btn-wrapper > .mphb-reserve-btn.button {
+    border: 2px solid $mphb_button_bg_invert;
+    background-color: $mphb_button_bg_invert;
+    color: $mphb_txt_invert_color;
+    font-family: $mphb_bt_font_family;
+}
+
+.mphb-reserve-btn-wrapper > .mphb-reserve-btn.button:hover {
+    background: $mphb_bg_accent_color;
+}
+[class*='mphb'] .entry-title {
+    font-weight: $mphb_et_font_weight;
+font-size: $mphb_et_font_size{px};
+font-style: $mphb_et_font_style;
+line-height: $mphb_et_line_height;
+font-family: $mphb_et_font_family;
+letter-spacing: $mphb_et_letter_spacing{px};
+text-transform: $mphb_et_text_transform;
+text-align: inherit;
+color: $mphb_txt_primary_color;
+}
+
+.mphb-details-title,
+.mphb-calendar-title,
+.mphb-reservation-form-title,
+.mphb-room-type-details-title,
+.mphb-booking-details-title,
+body.single-mphb_room_type .comments-title {
+    font-weight: $mphb_title_font_weight;
+font-size: $mphb_title_font_size{px};
+font-style: $mphb_title_font_style;
+line-height: $mphb_title_line_height;
+font-family: $mphb_title_font_family;
+letter-spacing: $mphb_title_letter_spacing{px};
+text-transform: $mphb_title_text_transform;
+text-align: inherit;
+color: $mphb_txt_primary_color;
+}
+
+.mphb-single-room-type-attributes .mphb-attribute-title,
+.mphb-price-wrapper strong,
+.mphb-price-wrapper .mphb-price.mphb-price-free {
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    font-weight: $mphb_st_font_weight;
+font-size: $mphb_st_font_size{px};
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+text-transform: $mphb_st_text_transform;
+color: $mphb_txt_secondary_color2;
+}
+
+.mphb-price-wrapper .mphb-price.mphb-price-free {
+    color: $mphb_txt_primary_color;
+}
+
+.mphb-loop-room-type-attributes li:before,
+.mphb-room-type-title ~ ul li:before {
+    background: $mphb_txt_secondary_color;
+}
+
+.mphb-regular-price strong {
+    font-family: $mphb_bt_font_family;
+    font-style: $mphb_bt_font_style;
+    font-weight: $mphb_bt_font-weight;
+font-size: $mphb_bt_font_size{px};
+line-height: $mphb_bt_line_height;
+color: $mphb_txt_secondary_color;
+}
+
+.mphb-price-wrapper .mphb-price,
+.mphb-regular-price .mphb-price,
+.mphb-total-price .mphb-price,
+.mphb-recommendation-total .mphb-price{
+    font-family: $mphb_price_font_family;
+    font-style: $mphb_price_font_style;
+    font-weight: $mphb_price_font_weight;
+    color: $mphb_txt_primary_color;
+}
+
+.mphb-price-wrapper .mphb-currency,
+.mphb-regular-price .mphb-currency,
+.mphb-total-price .mphb-currency,
+.mphb-recommendation-total .mphb-currency {
+    font-family: $mphb_price_font_family;
+    font-style: $mphb_price_font_style;
+    font-weight: $mphb_price_font_weight;
+font-size: $mphb_price_font_size{px};
+line-height: $mphb_price_line_height;
+}
+
+/*    price period   */
+.mphb-regular-price .mphb-price-period,
+.mphb-single-room-sidebar .mphb-price-period {
+    font-family: $mphb_price_font_family;
+    font-style: $mphb_price_font_style;
+    font-weight: $mphb_price_font_weight;
+font-size: $mphb_price_font_size{px};
+line-height: $mphb_price_line_height;
+}
+
+body.single-mphb_room_type .navigation.post-navigation .nav-text,
+body.single-mphb_room_type .comment-body .reply{
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    font-weight: $mphb_st_font_weight;
+font-size: $mphb_st_font_size{px};
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+color: $mphb_txt_secondary_color2;
+}
+
+body.single-mphb_room_type .navigation.post-navigation .post-title {
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    color: $mphb_txt_primary_color;
+}
+
+body.single-mphb_room_type .navigation.post-navigation .nav-links a:hover i,
+body.single-mphb_room_type .navigation.post-navigation .nav-links a:hover .nav-text {
+    color: $mphb_txt_accent_color2;
+}
+
+body.single-mphb_room_type .comment-form input[type='text'],
+body.single-mphb_room_type .comment-form textarea {
+    background-color: $mphb_bg_secondary_color;
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    font-weight: $mphb_st_font_weight;
+font-size: $mphb_st_font_size{px};
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+text-transform: $mphb_st_text_transform;
+}
+
+body.single-mphb_room_type .comment-form-cookies-consent label[for=wp-comment-cookies-consent]:before,
+.mphb_checkout-services-list label em:before {
+    background: $mphb_bg_secondary_color;
+}
+
+body.single-mphb_room_type .comment-form-cookies-consent input[type='checkbox']:checked ~ label[for=wp-comment-cookies-consent]:before,
+.mphb_checkout-services-list label input:checked + em:before {
+    color: $mphb_txt_secondary_color;
+    background: $mphb_bg_secondary_color;
+}
+
+body.single-mphb_room_type .comment-form .submit,
+.mphb_sc_checkout-submit-wrapper .button,
+.mphb-book-button,
+.mphb-recommendation .mphb-recommendation-reserve-button,
+.mphb_sc_search_results-wrapper .mphb-confirm-reservation {
+    color: $mphb_txt_invert_color;
+    background: $mphb_button_bg;
+
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    font-weight: $mphb_st_font_weight;
+    text-transform: $mphb_st_text_transform;
+}
+
+body.single-mphb_room_type .comment-form .submit:hover,
+.mphb_sc_checkout-submit-wrapper .button:hover,
+.mphb-book-button:hover {
+    background: $mphb_button_bg_invert;
+}
+
+.mphb-room-details .mphb-room-type-title span,
+.mphb-room-details .mphb-guests-number span,
+.mphb-room-details .mphb-check-in-date span,
+.mphb-room-details .mphb-check-out-date span,
+.mphb-booking-details.mphb-checkout-section
+.mphb-room-type-title span,
+.mphb-booking-details.mphb-checkout-section .mphb-guests-number span,
+.mphb-booking-details.mphb-checkout-section .mphb-check-in-date span,
+.mphb-booking-details.mphb-checkout-section .mphb-check-out-date span,
+article.mphb_room_service .entry-content h6{
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    font-weight: $mphb_st_font_weight;
+font-size: $mphb_st_font_size{px};
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+
+color: $mphb_txt_secondary_color2;
+display: $mphb_st_text_transform;
+}
+
+.mphb_sc_checkout-wrapper .mphb-room-details > p,
+#mphb-customer-details > p {
+    background: $mphb_bg_secondary_color;
+}
+.mphb-checkout-section p > label {
+    font-family: $mphb_bt_font_family;
+    font-style: $mphb_bt_font_style;
+    font-weight: $mphb_bt_font-weight;
+    color: $mphb_txt_secondary_color;
+}
+
+
+.mphb-checkout-section p > input,
+.mphb-checkout-section p > select,
+.mphb-checkout-section p > textarea {
+    background: $mphb_bg_primary_color;
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    font-weight: $mphb_st_font_weight;
+font-size: $mphb_st_font_size{px};
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+text-transform: $mphb_st_text_transform;
+}
+
+.mphb-price-breakdown tbody tr > th {
+    font-family: $mphb_bt_font_family;
+    font-style: $mphb_bt_font_style;
+    font-weight: $mphb_bt_font-weight;
+font-size: $mphb_bt_font_size{px};
+line-height: $mphb_bt_line_height;
+
+color: $mphb_txt_secondary_color;
+}
+
+.mphb-price-breakdown-accommodation.mphb-price-breakdown-expand,
+.mphb-price-breakdown-total th:first-child {
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    font-weight: $mphb_st_font_weight;
+font-size: $mphb_st_font_size{px};
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+text-transform: $mphb_st_text_transform;
+
+color: $mphb_txt_secondary_color2;
+}
+
+.mphb-reserve-rooms-details .mphb-room-type-title a,
+{
+    font-weight: $mphb_bt_font-weight;
+font-size: $mphb_bt_font_size{px};
+font-style: $mphb_bt_font_style;
+line-height: $mphb_bt_line_height;
+font-family: $mphb_bt_font_family;
+letter-spacing: $mphb_bt_letter_spacing{px};
+text-transform: $mphb_bt_text_transform;
+}
+
+.mphb-rate-chooser strong {
+    font-family: $mphb_st_font_family;
+    font-style: $mphb_st_font_style;
+    font-weight: $mphb_st_font_weight;
+font-size: $mphb_st_font_size{px};
+line-height: $mphb_st_line_height;
+letter-spacing: $mphb_st_letter_spacing{px};
+text-transform: $mphb_st_text_transform;
+
+color: $mphb_txt_secondary_color2;
+}
+
+.mphb_sc_checkout-wrapper .mphb-room-details > p,
+.mphb-room-details .mphb-price-breakdown tbody tr,
+.mphb-booking-details .mphb-price-breakdown tbody tr,
+.mphb-booking-details .mphb-price-breakdown tfoot tr,
+.mphb-room-details .mphb-price-breakdown tbody tr:first-child,
+.mphb-booking-details .mphb-price-breakdown tbody tr:first-child,
+.mphb-recommendation-details-list li .mphb-recommendation-item {
+    background-color: $mphb_bg_secondary_color;
+    border-bottom-color: $mphb_txt_secondary_color;
+}
+
+.mphb-price-breakdown tbody tr {
+    background-color: $mphb_bg_secondary_color;
+    border-bottom: 2px solid $mphb_bg_primary_color;
+}
+
+.mphb-price-breakdown tfoot tr {
+    background: $mphb_bg_secondary_color;
+}
+
+.mphb-room-rate-variant input:checked + strong:after {
+    background: $mphb_txt_secondary_color;
+}
+
+.short-single-room .mphb-book-button {
+    color: $mphb_txt_primary_color;
+    border: 2px solid $mphb_txt_primary_color;
+}
+
+.short-single-room .mphb-book-button:hover {
+    color: $mphb_button_bg;
+    border: 2px solid $mphb_button_bg;
+}
+
+.mphb-flexslider ul.flex-direction-nav a:hover {
+    color: $mphb_txt_invert_color;
+    background: $mphb_link_color;
+}
+
+[class*='mphb'] .btn {
+    color: $mphb_txt_invert_color;
+}
+
+[class*='mphb'] .btn:hover {
+    color: $mphb_txt_invert_color;
+}

@@ -1,0 +1,66 @@
+/*--------------------------------------------------------------
+## Jet Blog
+--------------------------------------------------------------*/
+$loader-width: 30px;
+$loader-border-width: 3px;
+
+.jet-smart-listing-wrap.jet-processing + div.jet-smart-listing-loading {
+	width: $loader-width;
+	height: $loader-width;
+	border: $loader-border-width solid transparent;
+	border-top-color: red;
+	border-right-color: red;
+}
+
+/*--------------------------------------------------------------
+## Jet mobile
+--------------------------------------------------------------*/
+.jet-mobile-menu-active .jet-mobile-menu-cover {
+	z-index: 1;
+}
+
+div[aria-label="Back to Prev Items"] i:before{
+	content:"\f104";
+}
+
+/*--------------------------------------------------------------
+## Jet woo builder
+--------------------------------------------------------------*/
+.single-product .product .elementor-jet-single-add-to-cart .cart .single_add_to_cart_button, 
+.single-product .product .elementor-jet-single-add-to-cart .cart .quantity {
+    vertical-align: top;
+}
+
+/*--------------------------------------------------------------
+## Slider
+--------------------------------------------------------------*/
+.elementor-slick-slider .slick-dotted.slick-slider {
+    display: block;
+}
+
+
+/*--------------------------------------------------------------
+## Jet tabs
+--------------------------------------------------------------*/
+.jet-sub-mega-menu .jet-tabs__content.active-content {
+	pointer-events: none;
+}
+
+
+.jet-menu-hover .jet-sub-mega-menu .jet-tabs__content.active-content {
+	pointer-events: auto;
+}
+
+.elementor-element .jet-tricks-satellite .jet-tricks-satellite__image .jet-tricks-satellite__image-instance{
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/*--------------------------------------------------------------
+## Jet theme core
+--------------------------------------------------------------*/
+
+.page-template-fullwidth-content .site-content__wrap,
+.jet-theme-core-document{
+	overflow: hidden;
+}
