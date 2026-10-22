@@ -33,7 +33,7 @@ function evx_fields() {
 	return array(
 		'_evx_media' => 'sanitize_key', '_evx_image' => 'absint', '_evx_video' => 'absint',
 		'_evx_video_url' => 'esc_url_raw', '_evx_date' => 'sanitize_text_field',
-		'_evx_start' => 'sanitize_text_field', '_evx_end' => 'sanitize_text_field',
+		'_evx_desc' => 'wp_kses_post',
 		'_evx_lieu' => 'sanitize_text_field', '_evx_lien' => 'esc_url_raw', '_evx_btn' => 'sanitize_text_field',
 	);
 }
@@ -76,11 +76,11 @@ function evx_box_html( $post ) {
 			<input type="url" class="widefat" name="_evx_video_url" value="<?php echo esc_attr( $v['_evx_video_url'] ); ?>" placeholder="https://www.youtube.com/watch?v=..."></p>
 			<p class="description">L'image mise en avant sert d'affiche à la vidéo.</p>
 		</div>
-		<div class="evx-row">
-			<p>Date<br><input type="date" name="_evx_date" value="<?php echo esc_attr( $v['_evx_date'] ); ?>"></p>
-			<p>Début<br><input type="time" name="_evx_start" value="<?php echo esc_attr( $v['_evx_start'] ); ?>"></p>
-			<p>Fin<br><input type="time" name="_evx_end" value="<?php echo esc_attr( $v['_evx_end'] ); ?>"></p>
-		</div>
+		<p><strong>Description de l'événement</strong><br>
+			<textarea name="_evx_desc" rows="6" class="widefat" placeholder="Présentation, programme…"><?php echo esc_textarea( $v['_evx_desc'] ); ?></textarea>
+			<span class="description">Texte affiché dans la liste et sur la page de l'événement. Retour à la ligne = nouveau paragraphe.</span>
+		</p>
+		<p>Date<br><input type="date" name="_evx_date" value="<?php echo esc_attr( $v['_evx_date'] ); ?>"></p>
 		<p>Lieu<br><input type="text" class="widefat" name="_evx_lieu" value="<?php echo esc_attr( $v['_evx_lieu'] ); ?>"></p>
 		<div class="evx-row">
 			<p style="flex:2">Lien d'inscription<br><input type="url" class="widefat" name="_evx_lien" value="<?php echo esc_attr( $v['_evx_lien'] ); ?>"></p>
@@ -121,9 +121,9 @@ add_action( 'save_post_evenement', function ( $post_id ) {
 
 /* ---------- 3. Fonctions d'affichage ---------- */
 function evx_date( $id ) { $d = get_post_meta( $id, '_evx_date', true ); return $d ? date_i18n( 'j F Y', strtotime( $d ) ) : ''; }
-function evx_time( $id ) {
-	$s = get_post_meta( $id, '_evx_start', true ); $e = get_post_meta( $id, '_evx_end', true );
-	return $s && $e ? "De $s à $e" : ( $s ? "À $s" : '' );
+function evx_desc( $id ) {
+	$d = get_post_meta( $id, '_evx_desc', true );
+	return $d ? '<div class="evx-desc">' . wpautop( wp_kses_post( $d ) ) . '</div>' : '';
 }
 function evx_is_past( $id ) { $d = get_post_meta( $id, '_evx_date', true ); return $d && $d < current_time( 'Y-m-d' ); }
 
@@ -154,12 +154,10 @@ function evx_media( $id, $size = 'large' ) {
 function evx_meta_list( $id ) {
 	$ico = array(
 		'd' => '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
-		't' => '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
 		'l' => '<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
 	);
 	$o = '<ul class="evx-meta">';
 	if ( $d = evx_date( $id ) ) $o .= '<li>' . $ico['d'] . esc_html( $d ) . '</li>';
-	if ( $t = evx_time( $id ) ) $o .= '<li>' . $ico['t'] . esc_html( $t ) . '</li>';
 	if ( $l = get_post_meta( $id, '_evx_lieu', true ) ) $o .= '<li>' . $ico['l'] . esc_html( $l ) . '</li>';
 	return $o . '</ul>';
 }
@@ -201,6 +199,7 @@ function evx_css() {
 	.evx svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 	.evx-btn{display:inline-flex;align-items:center;gap:10px;background:var(--a);color:#fff!important;text-transform:uppercase;font-weight:700;font-size:13px;padding:12px 22px;text-decoration:none}
 	.evx-btn:hover{background:#9e0c24}
+	.evx-desc{margin:0 0 14px;line-height:1.6}.evx-desc p{margin:0 0 8px}.evx-desc ul{margin:0 0 8px 20px}
 	.evx-single .evx-media{aspect-ratio:16/9;margin-bottom:30px}
 	.evx-single-box{background:var(--s);padding:24px;border-radius:6px;margin-bottom:30px}
 	@media(max-width:767px){.evx-card{grid-template-columns:1fr;gap:16px}.evx-tabs{gap:20px}}
@@ -248,7 +247,7 @@ add_shortcode( 'evenements', function () {
 			echo '<div>';
 			if ( $ts ) foreach ( $tt as $t ) echo '<span class="evx-tag">' . esc_html( $t->name ) . '</span>';
 			echo '<h3><a href="' . esc_url( get_permalink() ) . '">' . esc_html( get_the_title() ) . '</a></h3>';
-			if ( has_excerpt() ) echo '<div>' . wpautop( esc_html( get_the_excerpt() ) ) . '</div>';
+			echo evx_desc( $id );
 			echo evx_meta_list( $id ) . evx_button( $id );
 			echo '</div></article>';
 		}
@@ -279,6 +278,7 @@ add_filter( 'the_content', function ( $content ) {
 	if ( ! is_singular( 'evenement' ) || ! in_the_loop() || ! is_main_query() ) return $content;
 	$id  = get_the_ID();
 	$top = evx_css() . '<div class="evx evx-single">' . evx_media( $id, 'full' );
+	$top .= evx_desc( $id );
 	$top .= '<div class="evx-single-box">' . evx_meta_list( $id ) . evx_button( $id );
 	if ( evx_is_past( $id ) ) $top .= '<p style="color:#c8102e;font-weight:600;margin:0">Cet événement est terminé.</p>';
 	$top .= '</div></div>';
