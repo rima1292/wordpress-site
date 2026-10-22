@@ -284,3 +284,25 @@ add_filter( 'the_content', function ( $content ) {
 	$top .= '</div></div>';
 	return $top . $content;
 } );
+
+/* ---------- 6. Compatibilité : shortcode dans les blocs / widgets HTML ---------- */
+// Widgets « HTML personnalisé » et « Texte ».
+add_filter( 'widget_text', 'do_shortcode' );
+add_filter( 'widget_custom_html_content', 'do_shortcode' );
+// Widget « HTML » d'Elementor.
+add_filter( 'elementor/widget/render_content', function ( $content, $widget ) {
+	return ( 'html' === $widget->get_name() && false !== strpos( $content, '[evenements' ) ) ? do_shortcode( $content ) : $content;
+}, 10, 2 );
+// Bloc « HTML personnalisé » de Gutenberg.
+add_filter( 'render_block', function ( $html, $block ) {
+	return ( 'core/html' === $block['blockName'] && false !== strpos( $html, '[evenements' ) ) ? do_shortcode( $html ) : $html;
+}, 10, 2 );
+
+/* ---------- 7. Affichage automatique sur la page « evenements » (sans shortcode) ---------- */
+add_filter( 'the_content', function ( $content ) {
+	if ( is_page( 'evenements' ) && in_the_loop() && is_main_query()
+		&& false === strpos( $content, 'evx-list' ) && ! has_shortcode( get_post()->post_content, 'evenements' ) ) {
+		$content .= do_shortcode( '[evenements]' );
+	}
+	return $content;
+}, 20 );
