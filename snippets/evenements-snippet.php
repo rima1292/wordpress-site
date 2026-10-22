@@ -28,11 +28,20 @@ add_action( 'init', function () {
 	if ( ! get_option( 'evx_flushed' ) ) { flush_rewrite_rules(); update_option( 'evx_flushed', 1 ); }
 } );
 
-/* ---------- 2. Champs : média (image OU vidéo), date, heures, lieu, lien ---------- */
+/* ---------- 2. Champs : média (image OU vidéo), description, date, lieu, lien ---------- */
+
+/** « jj/mm/aaaa » -> « aaaa-mm-jj » (format enregistré, utile pour le tri). */
+function evx_clean_date( $v ) {
+	$v = trim( sanitize_text_field( $v ) );
+	if ( preg_match( '~^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})$~', $v, $m ) && checkdate( (int) $m[2], (int) $m[1], (int) $m[3] ) ) {
+		return sprintf( '%04d-%02d-%02d', $m[3], $m[2], $m[1] );
+	}
+	return preg_match( '~^\d{4}-\d{2}-\d{2}$~', $v ) ? $v : '';
+}
 function evx_fields() {
 	return array(
 		'_evx_media' => 'sanitize_key', '_evx_image' => 'absint', '_evx_video' => 'absint',
-		'_evx_video_url' => 'esc_url_raw', '_evx_date' => 'sanitize_text_field',
+		'_evx_video_url' => 'esc_url_raw', '_evx_date' => 'evx_clean_date',
 		'_evx_desc' => 'wp_kses_post',
 		'_evx_lieu' => 'sanitize_text_field', '_evx_lien' => 'esc_url_raw', '_evx_btn' => 'sanitize_text_field',
 	);
@@ -80,7 +89,8 @@ function evx_box_html( $post ) {
 			<textarea name="_evx_desc" rows="6" class="widefat" placeholder="Présentation, programme…"><?php echo esc_textarea( $v['_evx_desc'] ); ?></textarea>
 			<span class="description">Texte affiché dans la liste et sur la page de l'événement. Retour à la ligne = nouveau paragraphe.</span>
 		</p>
-		<p>Date<br><input type="date" name="_evx_date" value="<?php echo esc_attr( $v['_evx_date'] ); ?>"></p>
+		<p>Date (jj/mm/aaaa)<br><input type="text" name="_evx_date" placeholder="jj/mm/aaaa" maxlength="10" inputmode="numeric" autocomplete="off" pattern="\d{2}/\d{2}/\d{4}"
+			value="<?php echo esc_attr( $v['_evx_date'] ? date( 'd/m/Y', strtotime( $v['_evx_date'] ) ) : '' ); ?>"></p>
 		<p>Lieu<br><input type="text" class="widefat" name="_evx_lieu" value="<?php echo esc_attr( $v['_evx_lieu'] ); ?>"></p>
 		<div class="evx-row">
 			<p style="flex:2">Lien d'inscription<br><input type="url" class="widefat" name="_evx_lien" value="<?php echo esc_attr( $v['_evx_lien'] ); ?>"></p>
@@ -99,6 +109,8 @@ function evx_box_html( $post ) {
 					if(t==='video'){$('<video controls muted>').attr('src',a.url).appendTo($p);}
 					else{$('<img>').attr('src',a.sizes&&a.sizes.medium?a.sizes.medium.url:a.url).appendTo($p);}});}
 			frames[t].open();});
+		$b.on('input','[name=_evx_date]',function(){var d=this.value.replace(/\D/g,'').slice(0,8);
+			this.value=d.length>4?d.slice(0,2)+'/'+d.slice(2,4)+'/'+d.slice(4):(d.length>2?d.slice(0,2)+'/'+d.slice(2):d);});
 		$b.on('click','.evx-del',function(e){e.preventDefault();var t=$(this).data('t');$('#evx-'+t).val('');$('#evx-'+t+'-prev').empty();});
 	});
 	</script>
@@ -120,7 +132,7 @@ add_action( 'save_post_evenement', function ( $post_id ) {
 } );
 
 /* ---------- 3. Fonctions d'affichage ---------- */
-function evx_date( $id ) { $d = get_post_meta( $id, '_evx_date', true ); return $d ? date_i18n( 'j F Y', strtotime( $d ) ) : ''; }
+function evx_date( $id ) { $d = get_post_meta( $id, '_evx_date', true ); return $d ? date( 'd/m/Y', strtotime( $d ) ) : ''; }
 function evx_desc( $id ) {
 	$d = get_post_meta( $id, '_evx_desc', true );
 	return $d ? '<div class="evx-desc">' . wpautop( wp_kses_post( $d ) ) . '</div>' : '';
