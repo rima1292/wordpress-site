@@ -287,6 +287,7 @@ if ( ! class_exists( 'Monstroid2_Theme_Setup' ) ) {
 			require_once get_theme_file_path( 'inc/context.php' );
 			require_once get_theme_file_path( 'inc/hooks.php' );
 			require_once get_theme_file_path( 'inc/register-plugins.php' );
+			require_once get_theme_file_path( 'inc/events.php' );
 
 		}
 
