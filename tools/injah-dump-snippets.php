@@ -11,6 +11,8 @@
  *        -> human readable listing + metadata
  *      Open: /injah-dump-snippets.php?key=<YOUR_KEY>&format=json
  *        -> downloads injah-snippets-YYYYMMDD-HHMM.json (full code included)
+ *      Open: /injah-dump-snippets.php?key=<YOUR_KEY>&search=Organismes+de+formation
+ *        -> only snippets whose name or code matches (comma = OR), with line numbers
  *   3. Delete the file afterwards (or hit &selfdestruct=1 at the very end).
  *
  * SAFETY
@@ -36,6 +38,65 @@ if ( ! isset( $_GET['key'] ) || ! hash_equals( INJAH_KEY, (string) $_GET['key'] 
 $format = isset( $_GET['format'] ) ? strtolower( (string) $_GET['format'] ) : 'text';
 if ( 'json' !== $format ) {
 	$format = 'text';
+}
+
+/* Optional keyword filter (comma separated = OR). */
+$search_terms = array();
+if ( isset( $_GET['search'] ) ) {
+	foreach ( explode( ',', (string) $_GET['search'] ) as $term ) {
+		$term = trim( $term );
+		if ( '' !== $term ) {
+			$search_terms[] = $term;
+		}
+	}
+}
+
+/**
+ * Case-insensitive search that degrades gracefully when mbstring is missing.
+ * Accented terms (e.g. "Universités") need mb_stripos; plain stripos is used
+ * as a fallback so the script never fatals on a minimal PHP build.
+ */
+function injah_stripos( string $haystack, string $needle ) {
+	if ( function_exists( 'mb_stripos' ) ) {
+		return mb_stripos( $haystack, $needle );
+	}
+	return stripos( $haystack, $needle );
+}
+
+/**
+ * Truncate a UTF-8 string safely.
+ */
+function injah_substr( string $text, int $len ): string {
+	return function_exists( 'mb_substr' ) ? mb_substr( $text, 0, $len ) : substr( $text, 0, $len );
+}
+
+/**
+ * Locate the first line matching any search term, and report where it matched.
+ *
+ * @param string   $text  Name or code to scan.
+ * @param string[] $terms Search terms (OR).
+ * @param string   $where 'name' or 'code', echoed back for clarity.
+ *
+ * @return array{line:int,term:string,source:string}|null
+ */
+function injah_find_hit( string $text, array $terms, string $where ): ?array {
+	if ( ! $terms || '' === $text ) {
+		return null;
+	}
+	$lines = preg_split( '/\r\n|\r|\n/', $text );
+	foreach ( (array) $lines as $i => $line ) {
+		foreach ( $terms as $term ) {
+			if ( false !== injah_stripos( $line, $term ) ) {
+				return array(
+					'line'   => $i + 1,
+					'term'   => $term,
+					'source' => $where,
+					'text'   => (string) $line,
+				);
+			}
+		}
+	}
+	return null;
 }
 
 /* -------------------------------------------------------------------------
@@ -186,6 +247,8 @@ foreach ( $export['tables'] as $block ) {
 	echo "\n### TABLE {$block['table']} — {$block['row_count']} snippet(s)\n";
 	echo 'columns=' . implode( ',', $block['columns'] ) . "\n\n";
 
+	$matched = 0;
+
 	foreach ( $block['snippets'] as $s ) {
 		$id      = $s['id'] ?? '?';
 		$name    = $s['name'] ?? '(sans nom)';
@@ -193,12 +256,36 @@ foreach ( $export['tables'] as $block ) {
 		$scope   = $s['scope'] ?? '-';
 		$prio    = $s['priority'] ?? '-';
 		$mod     = $s['modified'] ?? '-';
-		$len     = isset( $s['code'] ) ? strlen( (string) $s['code'] ) : 0;
-		$has_nav = isset( $s['code'] ) && false !== stripos( (string) $s['code'], 'mobile-nav' );
+		$code    = isset( $s['code'] ) ? (string) $s['code'] : '';
+		$len     = strlen( $code );
+
+		/* Keyword filter: hit in name OR code, otherwise skip this row. */
+		$hit = null;
+		if ( $search_terms ) {
+			$hit = injah_find_hit( $name, $search_terms, 'name' );
+			if ( ! $hit ) {
+				$hit = injah_find_hit( $code, $search_terms, 'code' );
+			}
+			if ( ! $hit ) {
+				continue;
+			}
+			$matched++;
+		}
+
+		$has_nav = isset( $s['code'] ) && false !== stripos( $code, 'mobile-nav' );
 
 		echo "id={$id} active={$active} scope={$scope} prio={$prio} bytes={$len}\n";
 		echo "  name={$name}\n";
 		echo "  modified={$mod}" . ( $has_nav ? '  <<< CONTIENT mobile-nav' : '' ) . "\n";
+
+		if ( $hit ) {
+			echo "  MATCH source={$hit['source']} line={$hit['line']} term=\"{$hit['term']}\"\n";
+			echo '    ' . trim( injah_substr( (string) $hit['text'], 200 ) ) . "\n";
+		}
+	}
+
+	if ( $search_terms ) {
+		echo "matched_in_table={$matched}\n";
 	}
 }
 
